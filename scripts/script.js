@@ -2,7 +2,11 @@ import {tools} from '../data/data.js';
 
 let toolscpy = tools;
 
+let current = toolscpy;
+let filterState = 'all';
+
 const extensions = document.querySelector('.tools');
+
 
 function render(current){
 
@@ -30,7 +34,7 @@ function render(current){
   extensions.innerHTML = extensionsHTML;
 };
 
-render(toolscpy);
+render(current);
 
 extensions.addEventListener('click', (event) => {
   remove(event);
@@ -46,7 +50,18 @@ function toggeHundel(event){
   let tool = toolscpy.find(t => t.name === toolsName);
   if(tool){
     tool.isActive = !tool.isActive;
-    render(toolscpy)
+
+    setTimeout(() => {
+      if(filterState === 'active'){
+        current = toolscpy.filter(t => t.isActive === true);
+      }else if(filterState === 'inactive'){
+        current = toolscpy.filter(t => t.isActive === false);
+      }else{
+        current = toolscpy;
+      }
+      render(current)
+      },'3s')
+
   }
   console.log(toggleButton);
   
@@ -58,8 +73,8 @@ function remove(event){
   const removeButton = event.target.closest('.rm-btn');
   if(removeButton){
     const nameToRemove = removeButton.dataset.name;
-    toolscpy = toolscpy.filter(extension => extension.name !== nameToRemove)
-    render(toolscpy);
+    current = toolscpy.filter(extension => extension.name !== nameToRemove)
+    render(current);
   }
 }
 
@@ -67,21 +82,22 @@ function remove(event){
 const activeExtensions  = document.querySelector('.active');
 activeExtensions.addEventListener('click', () => {
   let current = toolscpy.filter(t => t.isActive === true);
+  filterState = 'active';
   render(current)
   
 })
 const InactiveExtensions  = document.querySelector('.Inactive');
 InactiveExtensions.addEventListener('click', () => {
   let current = toolscpy.filter(t => t.isActive === false);
+  filterState = 'inactive'
   render(current)
   
 })
 
 
 
-
-
 const allExtensions = document.querySelector('.all');
   allExtensions.addEventListener('click', () => {
+  filterState = 'all'
   render(toolscpy)
 })
