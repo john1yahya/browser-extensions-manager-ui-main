@@ -51,7 +51,6 @@ function toggeHundel(event){
   if(tool){
     tool.isActive = !tool.isActive;
 
-    setTimeout(() => {
       if(filterState === 'active'){
         current = toolscpy.filter(t => t.isActive === true);
       }else if(filterState === 'inactive'){
@@ -59,8 +58,8 @@ function toggeHundel(event){
       }else{
         current = toolscpy;
       }
-      render(current)
-      },'3s')
+      render(current);
+      
 
   }
   console.log(toggleButton);
@@ -73,8 +72,8 @@ function remove(event){
   const removeButton = event.target.closest('.rm-btn');
   if(removeButton){
     const nameToRemove = removeButton.dataset.name;
-    current = toolscpy.filter(extension => extension.name !== nameToRemove)
-    render(current);
+    toolscpy = toolscpy.filter(extension => extension.name !== nameToRemove)
+    render(toolscpy);
   }
 }
 
@@ -98,6 +97,20 @@ InactiveExtensions.addEventListener('click', () => {
 
 const allExtensions = document.querySelector('.all');
   allExtensions.addEventListener('click', () => {
-  filterState = 'all'
+  filterState = 'all';
   render(toolscpy)
+})
+
+let modeState = 'light';
+
+let mode = document.querySelector(".toggle-mode");
+mode.addEventListener('click', () => {
+  if (modeState === 'light'){
+    document.body.classList.add('darkMode');
+    modeState = 'dark'
+  }else if(modeState ='dark'){
+    document.body.classList.remove('darkMode');
+    modeState = 'light'
+  }
+
 })
