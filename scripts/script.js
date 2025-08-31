@@ -107,10 +107,12 @@ let mode = document.querySelector(".toggle-mode");
 mode.addEventListener('click', () => {
   if (modeState === 'light'){
     document.body.classList.add('darkMode');
-    modeState = 'dark'
+      mode.innerHTML = `<img src="assets/images/icon-sun.svg" alt="sun-svg">`
+      modeState = 'dark'
   }else if(modeState ='dark'){
-    document.body.classList.remove('darkMode');
-    modeState = 'light'
+      document.body.classList.remove('darkMode');
+      mode.innerHTML = `<img src="assets/images/icon-moon.svg" alt="sun-svg">`
+      modeState = 'light'
   }
 
 })
